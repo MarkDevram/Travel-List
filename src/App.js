@@ -126,7 +126,10 @@ function PackingList({ items, deleteItem, packedHandler, setItem }) {
         </select>
         <button
           onClick={() => {
-            setItem([])
+            if (sortedItems.length) {
+              const confirm = window.confirm("Want to Clear your Items ? ")
+              if (confirm) setItem([])
+            }
           }}
         >
           Clear List 🚮
