@@ -124,6 +124,13 @@ function PackingList({ items, deleteItem, packedHandler, setItem }) {
           <option value="description">Sort Items by description</option>
           <option value="packed">Sort Items by packed status</option>
         </select>
+        <button
+          onClick={() => {
+            setItem([])
+          }}
+        >
+          Clear List 🚮
+        </button>
       </div>
     </div>
   )
