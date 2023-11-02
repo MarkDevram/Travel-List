@@ -10,6 +10,7 @@ export default function App() {
       return [...prevItems, newItem]
     })
   }
+
   function deleteItem(id) {
     setItem((prevItems) => prevItems.filter((prevItem) => prevItem.id !== id))
   }
@@ -22,6 +23,7 @@ export default function App() {
       })
     )
   }
+
   return (
     <div>
       <Logo />
@@ -30,6 +32,7 @@ export default function App() {
         items={items}
         deleteItem={deleteItem}
         packedHandler={packedHandler}
+        setItem={setItem}
       />
       <Stats items={items} />
     </div>
@@ -86,11 +89,22 @@ function Form({ addNewItem }) {
   )
 }
 
-function PackingList({ items, deleteItem, packedHandler }) {
+function PackingList({ items, deleteItem, packedHandler, setItem }) {
+  const [sortBy, setSortby] = useState("input")
+  let sortedItems
+  if (sortBy === "input") sortedItems = items
+
+  if (sortBy === "description")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description))
+
+  if (sortBy === "packed")
+    sortedItems = items.slice().sort((a, b) => a.packed - b.packed)
   return (
     <div className="list">
       <ul>
-        {items.map((item) => {
+        {sortedItems.map((item) => {
           return (
             <Item
               key={item.id}
@@ -104,6 +118,13 @@ function PackingList({ items, deleteItem, packedHandler }) {
           )
         })}
       </ul>
+      <div className="actions">
+        <select value={sortBy} onChange={(e) => setSortby(e.target.value)}>
+          <option value="input">Sort Items by Input</option>
+          <option value="description">Sort Items by description</option>
+          <option value="packed">Sort Items by packed status</option>
+        </select>
+      </div>
     </div>
   )
 }
