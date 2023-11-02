@@ -129,6 +129,8 @@ function PackingList({ items, deleteItem, packedHandler, setItem }) {
             if (sortedItems.length) {
               const confirm = window.confirm("Want to Clear your Items ? ")
               if (confirm) setItem([])
+            } else {
+              alert("No Items ☹ Start Adding your Items into your bag 🎒 ")
             }
           }}
         >
